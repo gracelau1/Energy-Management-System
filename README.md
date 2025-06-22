@@ -1,0 +1,2 @@
+# Energy-Management-System
+An Energy Management System with motion detection (occupancy detection), time and day-aware scheduling, priority-based lighting control, manual overide options, simulated energy usage logging, usage logging and pattern learning, and a real-time dashboard EMS designed to showcase advanced energy automation logic, occupancy detection, and scheduling — as used in smart buildings.
