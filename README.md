@@ -7,7 +7,7 @@ Today, 60% of building assets is energy inefficient and it is expensive to obtai
 
 Energy-scout is a low-cost, real world data driven pre-installation advisory tool to determine the feasibility of installing Energy Management Systems (EMS), helping mid-to large sized companies unlock EMS savings using real people-flow data. It solves a specific pain point EMS vendors aren't addressing well: decision confidence, and at a much lower cost than EMS vendors.
 
-![alt text](system_overview.png)
+![alt text](system_architecture.png)
 
 1. Installs **low-cost IR break-beam sensors (2 per room, installed on frames of a room’s doorways)** to track **actual room occupancy status** of rooms in the client’s place of operations/buildings
 2. Uses that data to simulate **how much lighting/HVAC energy would be saved** if those rooms were controlled based on real-time usage, quantifying energy savings for the building
