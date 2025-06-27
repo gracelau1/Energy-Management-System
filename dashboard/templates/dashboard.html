@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart EMS Dashboard</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        let csvUploaded = false;
+        let configUploaded = false;
+        let simulationPaused = true;
+        let simulationRunning = false;
+
+        // Slider start hour (8 AM)
+        const simulationStartHour = 8;
+
+        function showUploadSuccess(id) {
+            const msg = document.getElementById(id);
+            msg.style.display = "block";
+            setTimeout(() => { msg.style.display = "none"; }, 3000);
+        }
+
+        async function fetchData() {
+            if (simulationPaused && simulationRunning) return; // Don't update if paused and running
+
+            const res = await fetch("/api/data");
+            const data = await res.json();
+            csvUploaded = data.csv_uploaded;
+            configUploaded = data.config_uploaded;
+
+            document.getElementById("start-btn").disabled = !(csvUploaded && configUploaded);
+
+            document.getElementById("csv-upload-status").style.display = csvUploaded ? "block" : "none";
+            document.getElementById("config-upload-status").style.display = configUploaded ? "block" : "none";
+
+            document.getElementById("sim-time").textContent = data.sim_time;
+
+            // Room Status Table
+            const statusTable = document.getElementById("room-status");
+            statusTable.innerHTML = `
+                <tr>
+                    <th>Room</th>
+                    <th>Light</th>
+                    <th>Manual Override</th>
+                </tr>`;
+            for (const room in data.states) {
+                const state = data.states[room];
+                const lightClass = state.light_on ? "light-on" : "light-off";
+                const lightText = state.light_on ? "ON" : "OFF";
+                statusTable.innerHTML += `
+                    <tr>
+                        <td>${room}</td>
+                        <td class="${lightClass}">${lightText}</td>
+                        <td>${state.manual_override ? "Yes" : "No"}</td>
+                    </tr>`;
+            }
+
+            // Energy Log
+            const log = document.getElementById("energy-log");
+            log.innerHTML = "";
+            for (const line of data.log) {
+                log.innerHTML += `<div>${line}</div>`;
+            }
+            log.scrollTop = log.scrollHeight;
+
+            // Per-Room Usage Table
+            const usageTable = document.getElementById("per-room-usage");
+            usageTable.innerHTML = `
+                <tr>
+                    <th>Room</th>
+                    <th>Used (with EMS)</th>
+                    <th>No EMS</th>
+                    <th>Energy Saved</th>
+                </tr>`;
+            for (const room in data.room_energy) {
+                usageTable.innerHTML += `
+                    <tr>
+                        <td>${room}</td>
+                        <td>${data.room_energy[room]} kWh</td>
+                        <td>${data.room_energy_no_ems[room]} kWh</td>
+                        <td>${data.room_energy_saved[room]} kWh</td>
+                    </tr>`;
+            }
+
+            document.getElementById("total-energy").textContent =
+                `Used (With EMS): ${data.energy.used} kWh | Used (No EMS): ${data.energy.no_ems} kWh | Energy Saved: ${data.energy.saved} kWh`;
+
+            // Update energy chart
+            const label = data.sim_time;
+            if (energyChartData.labels.length > 50) {
+                energyChartData.labels.shift();
+                energyChartData.datasets.forEach(ds => ds.data.shift());
+            }
+            energyChartData.labels.push(label);
+            energyChartData.datasets[0].data.push(data.energy.used);
+            energyChartData.datasets[1].data.push(data.energy.no_ems);
+            energyChartData.datasets[2].data.push(data.energy.saved);
+            energyChart.update();
+        }
+
+        // Time slider
+        const slider = document.getElementById('time-slider');
+        const selectedTimeSpan = document.getElementById('selected-time');
+
+        function sliderTimeToStr(totalMinutes) {
+            let hour = (simulationStartHour + Math.floor(totalMinutes / 60)) % 24;
+            let minute = totalMinutes % 60;
+            return (hour < 10 ? '0' + hour : hour) + ':' + (minute < 10 ? '0' + minute : minute);
+        }
+
+        if (slider) {
+            slider.addEventListener('input', () => {
+                const totalMinutes = parseInt(slider.value);
+                selectedTimeSpan.textContent = sliderTimeToStr(totalMinutes);
+            });
+        }
+
+        async function applySelectedTime() {
+            const timeStr = selectedTimeSpan.textContent;
+            const res = await fetch('/api/set_time', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({time: timeStr})
+            });
+            if (res.ok) {
+                await fetchData();
+                alert('Simulation time set to ' + timeStr);
+            } else {
+                alert('Failed to set simulation time');
+            }
+        }
+
+        // Chart setup
+        let energyChart;
+        let energyChartData = {
+            labels: [],
+            datasets: [
+                { label: "Used (with EMS)", data: [], borderColor: "#3498db", fill: false },
+                { label: "No EMS", data: [], borderColor: "#f39c12", fill: false },
+                { label: "Energy Saved", data: [], borderColor: "#27ae60", fill: false }
+            ]
+        };
+
+        function initializeChart() {
+            const ctx = document.getElementById("energyChart").getContext("2d");
+            energyChart = new Chart(ctx, {
+                type: 'line',
+                data: energyChartData,
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: { title: { display: true, text: 'Time' } },
+                        y: { title: { display: true, text: 'kWh' }, beginAtZero: true }
+                    },
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+        }
+
+        async function startSimulation() {
+            simulationPaused = false;
+            simulationRunning = true;
+            await fetch("/api/start", { method: "POST" });
+        }
+
+        async function pauseSimulation() {
+            simulationPaused = true;
+            await fetch("/api/pause", { method: "POST" });
+        }
+
+        async function resumeSimulation() {
+            simulationPaused = false;
+            await fetch("/api/resume", { method: "POST" });
+        }
+
+        setInterval(fetchData, 1000);
+
+        window.onload = () => {
+            initializeChart();
+            fetchData();
+        };
+        
+        
+        function skipTo9pm() {
+            fetch("/api/skip_to_9pm", { method: "POST" })
+                .then(response => response.json())
+                .then(data => {
+                    alert(`Fast-forwarded to 9PM.\nTime: ${data.final_time}\nUsed: ${data.energy.used} kWh\nNo EMS: ${data.energy.no_ems} kWh\nSaved: ${data.energy.saved} kWh`);
+                    updateDashboard();  // Make sure this refreshes the chart and values
+                })
+            .catch(err => {
+                alert("Error skipping to 9PM");
+                console.error(err);
+            });
+        }
+        
+        async function skipToNextMorning() {
+            const res = await fetch("/api/fastforward", { method: "POST" });
+            const data = await res.json();
+            if (res.ok) {
+                alert("Simulation skipped to 8AM next day.");
+                simulationPaused = true;  // stop real-time simulation updates
+                fetchData();              // refresh UI with new data
+            } else {
+                alert("Fast-forward failed: " + data.error);
+            }
+        }
+
+        function downloadChart() {
+            const link = document.createElement("a");
+            link.href = document.getElementById("energyChart").toDataURL("image/png");
+            link.download = "energy_chart_8am_to_8am.png";
+            link.click();
+        }
+
+
+
+
+    </script>
+</head>
+<body>
+    <h1>Smart Energy Management System</h1>
+
+    <h2>Upload Employee Movement CSV</h2>
+    <form action="/upload" method="post" enctype="multipart/form-data" onsubmit="showUploadSuccess('csv-upload-status')">
+        <input type="file" name="csv_file" accept=".csv" required>
+        <button type="submit">Upload CSV</button>
+    </form>
+    <p id="csv-upload-status" style="color: green; font-weight: bold; display: none;">
+        Movement CSV file uploaded successfully.
+    </p>
+
+    <h2>Upload Room Configuration</h2>
+    <form action="/upload_config" method="post" enctype="multipart/form-data" onsubmit="showUploadSuccess('config-upload-status')">
+        <input type="file" name="config_file" accept=".py,.txt,.json" required>
+        <button type="submit">Upload Config</button>
+    </form>
+    <p id="config-upload-status" style="color: green; font-weight: bold; display: none;">
+        Room config file uploaded successfully.
+    </p>
+
+    <div style="margin-top: 20px;">
+        <button id="start-btn" onclick="startSimulation()" disabled>Start Simulation</button>
+        <button onclick="pauseSimulation()">Pause</button>
+        <button onclick="resumeSimulation()">Resume</button>
+        <button onclick="skipTo9pm()" class="btn btn-warning">Skip to 9PM Today</button>
+        <button onclick="skipToNextMorning()">Skip to 8AM Next Day</button>
+        <button onclick="downloadChart()">Download Energy Chart</button>
+    </div>
+
+    <h2>Current Simulation Time: <span id="sim-time">--:--:--</span></h2>
+
+    <h2>Room Status</h2>
+    <table id="room-status"></table>
+
+    <h2>Energy Log (All Events)</h2>
+    <div id="energy-log" style="height:150px; overflow-y:scroll; border:1px solid #ccc; padding:5px;"></div>
+
+    <h2>Energy Usage Per Room (in kWh)</h2>
+    <table id="per-room-usage"></table>
+
+    <h2>Total Energy Used Today (in kWh):</h2> <span id="total-energy"></span>
+
+    <h2>Live Energy Usage Chart</h2>
+    <canvas id="energyChart" height="100"></canvas>
+
+</body>
+</html>
+
