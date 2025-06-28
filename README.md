@@ -14,3 +14,6 @@ Energy-scout is a low-cost, real world data driven pre-installation advisory too
 ## Tech Stack
 
 ![alt text](Table_1.png)
+
+# Links
+[An Internal Link](/BusinessCase)
