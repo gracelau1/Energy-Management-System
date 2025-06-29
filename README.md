@@ -17,21 +17,10 @@ Energy-scout is a low-cost, real world data driven pre-installation advisory too
 
 # Skills
 
-# EnergyScout Simulation Software
-![alt text](pictures/1.png)
-<p style="text-align:center;">Home Page</p>
-Shows the complete 5-stage flow of the service and stages of completion
-
-![alt text](pictures/2.png)
-<p style="text-align:center;">Input EMS Parameters Screen</p>
-Shows overview of EMS parameters clients can choose from and configure for simulation
-
-![alt text](pictures/3.png)
-<p style="text-align:center;">Energy Savings Report Dashboard</p>
-Shows energy saving breakdown, key metrics for decision-making (net energy savings, breakeven point, ROI etc.) and next step recommendations (eg. EMS systems from EMS vendors/companies)/custom recommmedation by platform
 
 # Links for further info
-1. [The Business Case](/BusinessCase)
-2. [Project Demo](markdownpages/ProjectDemo)
+1. [The Business Case](/BusinessCase.md)
+2. [EnergyScout Simulation Software](/details.md)
+3. [Project Demo](markdownpages/ProjectDemo.md)
 4. [In Progress](markdownpages/InProgress.md)
 
