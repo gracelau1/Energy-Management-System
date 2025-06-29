@@ -3,7 +3,7 @@
 # Project Demo
 Small-scale project carried out at home, with home as proxy for an office building. 
 
-![Alt text](../pictures/floorplan (1).png)
+![Alt text](../pictures/floorplan(1).png)
 
 1. Break-beam IR Sensors + ESP32 were installed at each doorway of each room in the home, which would log occupancy data throughout the day and save it to ESP32 internal memory. 
 2. At the end of 24 hrs, ESP32 would connect to the cloud-hosted IoT database and upload each room's CSV to the database.
