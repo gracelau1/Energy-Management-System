@@ -5,7 +5,7 @@ The energy auditing service offered by established EMS companies is **expensive*
 
 # Price Comparison
 
-To get energy savings quantification based on unique dataset of clients, EnergyScout advisory tool for EMS could be deployed for **<1% the cost** of a normal energy audit offered by EMS companies.
+To get a energy savings quantification, EnergyScout advisory tool for EMS could be deployed for **<1% the cost** of a normal energy audit offered by EMS companies.
 
 | **Feature** | **Current EMS vendors** | **EnergyScout** |
 | ----------- | ----------- |--|
