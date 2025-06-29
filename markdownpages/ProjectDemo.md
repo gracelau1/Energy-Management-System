@@ -12,4 +12,7 @@ Small-scale project carried out at home, with home as proxy for an office buildi
 3. Database compiles all CSV files into full CSV of "employee" movement for the entire day.
 4. Full CSV uploaded to EnergyScout Simulation Software
 
-<video src="../demovideo.mp4" width="320" height="240" controls></video>
+## Demo Video
+
+[![Watch the video](https://img.youtube.com/vi/1pkgI2AgtQE/0.jpg)](https://youtu.be/1pkgI2AgtQE)
+
