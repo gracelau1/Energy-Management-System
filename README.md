@@ -3,7 +3,7 @@
 ### EnergyScout
 ###### A lightweight, low-risk way to show hard data to unlock EMS savings using real people-flow data
 
-Today, 30%-50% of building assets is energy inefficient according to the US EPA and it is expensive to obtain proof of cost savings of installing an Energy Management System (EMS) for one’s specific building configuration and human footfall.
+Today, 30% of energy in commercial buildings is wasted according to the US EPA, and it is also expensive to obtain proof of cost savings of installing an Energy Management System (EMS) for one’s specific building configuration and human footfall.
 
 Energy-scout is a low-cost, real world data driven pre-installation advisory tool to determine the feasibility of installing EMS, helping mid-to large sized companies unlock EMS savings using real people-flow data. It solves a specific pain point EMS vendors aren't addressing well: decision confidence, and at a much lower cost than EMS vendors.
 
