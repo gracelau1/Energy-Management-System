@@ -2,6 +2,7 @@
 
 # Project Demo
 Small-scale project carried out at home, with home as proxy for an office building. 
+
 ![Alt text](../pictures/floorplan (1).png)
 
 1. Break-beam IR Sensors + ESP32 were installed at each doorway of each room in the home, which would log occupancy data throughout the day and save it to ESP32 internal memory. 
