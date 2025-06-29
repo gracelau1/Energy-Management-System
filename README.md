@@ -1,4 +1,4 @@
-![alt text](banner.png)
+![alt text](pictures/banner.png)
 
 ### EnergyScout
 ###### A lightweight, low-risk way to show hard data to unlock EMS savings using real people-flow data
@@ -9,24 +9,24 @@ Energy-scout is a low-cost, real world data driven pre-installation advisory too
 
 ## System Architecture
 
-![alt text](system_architecture.png)
+![alt text](pictures/system_architecture.png)
 
 ## Tech Stack
 
-![alt text](Table_1.png)
+![alt text](pictures/Table_1.png)
 
 # Skills
 
 # EnergyScout Simulation Software
-![alt text](1.png)
+![alt text](pictures/1.png)
 <p style="text-align:center;">Home Page</p>
 Shows the complete 5-stage flow of the service and stages of completion
 
-![alt text](2.png)
+![alt text](pictures/2.png)
 <p style="text-align:center;">Input EMS Parameters Screen</p>
 Shows overview of EMS parameters clients can choose from and configure for simulation
 
-![alt text](3.png)
+![alt text](pictures/3.png)
 <p style="text-align:center;">Energy Savings Report Dashboard</p>
 Shows energy saving breakdown, key metrics for decision-making (net energy savings, breakeven point, ROI etc.) and next step recommendations (eg. EMS systems from EMS vendors/companies)/custom recommmedation by platform
 
