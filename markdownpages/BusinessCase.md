@@ -1,6 +1,11 @@
+![alt_text](../pictures/ProblemStatement.png)
+
+# Barrier to adoption
+The energy auditing service offered by established EMS companies is **expensive**, hence there is no cheap way to obtain cost savings that EMS would offset installation cost (eg. upfront hardware cost, extra electricity cost, maintenance cost), increasing the barrier to implementing EMS.
+
 # Price Comparison
 
-Energy Scout tool could be deployed for **<1% the cost** of a traditional EMS system **just to get a savings estimate**.
+To get energy savings quantification based on unique dataset of clients, EnergyScout tool could be deployed for **<1% the cost** of a normal energy audit offered by EMS companies.
 
 | **Feature** | **Current EMS vendors** | **EnergyScout** |
 | ----------- | ----------- |--|
