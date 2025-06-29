@@ -1,4 +1,4 @@
-[Back to README](../README.md)
+[Click to navigate back to README](../README.md)
 
 # Project Demo
 Small-scale project carried out at home, with home as proxy for an office building. 
@@ -14,5 +14,4 @@ Small-scale project carried out at home, with home as proxy for an office buildi
 
 ## Demo Video
 
-[![Watch the video](https://img.youtube.com/vi/1pkgI2AgtQE/0.jpg)](https://youtu.be/1pkgI2AgtQE)
-
+[![Watch the demo](https://img.youtube.com/vi/g6c9F1xL3G0/0.jpg)](https://www.youtube.com/watch?v=g6c9F1xL3G0)
