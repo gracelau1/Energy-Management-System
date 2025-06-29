@@ -15,3 +15,6 @@ Small-scale project carried out at home, with home as proxy for an office buildi
 ## Demo Video
 
 [![Watch the demo](https://img.youtube.com/vi/g6c9F1xL3G0/0.jpg)](https://www.youtube.com/watch?v=g6c9F1xL3G0)
+
+[Watch the demo on YouTube](https://www.youtube.com/watch?v=g6c9F1xL3G0)
+
