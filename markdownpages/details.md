@@ -1,4 +1,6 @@
 # EnergyScout Simulation Software
+The below page shows the UX/UI design of the software.
+
 ![alt text](../pictures/1.png)
 <h2 align="center"><strong>Screen 1: EnergyScout Homepage</strong></h2>
 <p align="center">Shows the complete 5-stage flow of the service and stages of completion</p>
