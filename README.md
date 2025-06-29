@@ -19,5 +19,4 @@ Energy-scout is a low-cost, real world data driven pre-installation advisory too
 1. [The Business Case](markdownpages/BusinessCase.md)
 2. [EnergyScout Simulation Software](markdownpages/details.md)
 3. [Project Demo](markdownpages/ProjectDemo.md)
-4. [In Progress](markdownpages/InProgress.md)
 
